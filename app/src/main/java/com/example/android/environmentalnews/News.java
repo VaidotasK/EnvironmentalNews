@@ -1,10 +1,8 @@
 package com.example.android.environmentalnews;
 
-import java.security.SecureRandom;
-
 public class News {
 
-    private String articleName;
+    private String articleTitle;
     private String articleSectionName;
     private String articlePublishedDate;
     private String articleUrl;
@@ -17,8 +15,8 @@ public class News {
 
 
     //    Full constructor to show all information of the article in list view
-    public News (String articleName, String articleSectionName, String articlePublishedDate, String articleUrl, String articleAuthor) {
-        this.articleName = articleName;
+    public News (String articleTitle, String articleSectionName, String articlePublishedDate, String articleUrl, String articleAuthor) {
+        this.articleTitle = articleTitle;
         this.articleSectionName = articleSectionName;
         this.articlePublishedDate = articlePublishedDate;
         this.articleUrl = articleUrl;
@@ -26,16 +24,16 @@ public class News {
     }
 
     //Constructor which doesn't involve article contributor
-    public News (String articleName, String articleSectionName, String articlePublishedDate, String articleUrl) {
-        this.articleName = articleName;
+    public News (String articleTitle, String articleSectionName, String articlePublishedDate, String articleUrl) {
+        this.articleTitle = articleTitle;
         this.articleSectionName = articleSectionName;
         this.articlePublishedDate = articlePublishedDate;
         this.articleUrl = articleUrl;
         this.articleAuthor = NO_AUTHOR;
     }
 
-    public String getArticleName() {
-        return articleName;
+    public String getArticleTitle() {
+        return articleTitle;
     }
 
     public String getArticleSectionName() {
