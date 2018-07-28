@@ -9,7 +9,12 @@ public class News {
     private String articlePublishedDate;
     private String articleUrl;
 
+
     private String articleAuthor;
+
+    //Constant variable if no author is provided
+    private static final String NO_AUTHOR = "";
+
 
     //    Full constructor to show all information of the article in list view
     public News (String articleName, String articleSectionName, String articlePublishedDate, String articleUrl, String articleAuthor) {
@@ -26,6 +31,7 @@ public class News {
         this.articleSectionName = articleSectionName;
         this.articlePublishedDate = articlePublishedDate;
         this.articleUrl = articleUrl;
+        this.articleAuthor = NO_AUTHOR;
     }
 
     public String getArticleName() {
@@ -46,5 +52,10 @@ public class News {
 
     public String getArticleAuthor() {
         return articleAuthor;
+    }
+
+    public boolean hasAuthor(){
+        return articleAuthor != NO_AUTHOR;
+
     }
 }
