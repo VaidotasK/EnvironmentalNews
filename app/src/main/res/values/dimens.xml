@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Sizes for padding or margins-->
+    <dimen name="padOrMar_XXS">0dp</dimen>
+    <dimen name="padOrMar_XS">1dp</dimen>
+    <dimen name="padOrMar_S">8dp</dimen>
+    <dimen name="padOrMar_M">14dp</dimen>
+    <dimen name="padOrMar_XL">106dp</dimen>
+
+    <!--Text sizes-->
+    <dimen name="textSize_S">14sp</dimen>
+    <dimen name="textSize_M">16sp</dimen>
+    <dimen name="textSize_L">20sp</dimen>
+
+</resources>
