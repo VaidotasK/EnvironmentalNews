@@ -21,11 +21,14 @@ import java.util.List;
 import static com.example.android.environmentalnews.MainActivity.LOG_TAG;
 
 
-
 /**
  * Helper methods related to requesting and receiving Environmental news data from theguardian
  */
 public final class NewsRequestManager {
+
+    private static String articleAuthor;
+
+
 
     private NewsRequestManager(){
     }
@@ -124,15 +127,16 @@ public final class NewsRequestManager {
             for(int i = 0; i < results.length(); i++){
                 JSONObject article = results.getJSONObject(i);
 
-                String articleTitle = article.getString("WebTitle");
+                String articleTitle = article.getString("webTitle");
                 String articleSectionName = article.getString("sectionName");
                 String articlePublishedDate = article.getString("webPublicationDate");
                 String articleUrl = article.getString("webUrl");
 
 
                 JSONArray tags = article.getJSONArray("tags");
-                    JSONObject tagsObj = tags.getJSONObject(0);
-                   String articleAuthor = tagsObj.getString("webTitle");
+                for(int y = 0; y < tags.length(); y++){
+                    JSONObject tagsObj = tags.getJSONObject(y);
+                   articleAuthor = tagsObj.getString("webTitle");}
 
 
                 News environmentalNew = new News(articleTitle, articleSectionName, articlePublishedDate, articleUrl, articleAuthor);

@@ -1,6 +1,7 @@
 package com.example.android.environmentalnews;
 
 
+
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>>{
 
     public static final String LOG_TAG = MainActivity.class.getName();
 
@@ -74,8 +75,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
+
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
-        return new NewsLoader(this,URL_TO_JSON_DATA);
+        return new NewsLoader(this, URL_TO_JSON_DATA);
     }
 
 
