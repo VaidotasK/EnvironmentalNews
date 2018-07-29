@@ -26,7 +26,7 @@ import static com.example.android.environmentalnews.MainActivity.LOG_TAG;
  */
 public final class NewsRequestManager {
 
-    private static String articleAuthor;
+    private static String articleAuthor = "";
 
 
 
@@ -110,6 +110,7 @@ public final class NewsRequestManager {
                 line = bufferedReader.readLine();
             }
         }
+
         return outputOfInpStr.toString();
     }
 
@@ -122,6 +123,7 @@ public final class NewsRequestManager {
 
         try {
             JSONObject root = new JSONObject(newsJson);
+
             JSONObject response = root.getJSONObject("response");
             JSONArray results = response.getJSONArray("results");
             for(int i = 0; i < results.length(); i++){
@@ -132,16 +134,15 @@ public final class NewsRequestManager {
                 String articlePublishedDate = article.getString("webPublicationDate");
                 String articleUrl = article.getString("webUrl");
 
-
                 JSONArray tags = article.getJSONArray("tags");
                 for(int y = 0; y < tags.length(); y++){
                     JSONObject tagsObj = tags.getJSONObject(y);
                    articleAuthor = tagsObj.getString("webTitle");}
 
-
                 News environmentalNew = new News(articleTitle, articleSectionName, articlePublishedDate, articleUrl, articleAuthor);
 
-                news.add(environmentalNew);            }
+                news.add(environmentalNew);
+            }
         }
         catch (JSONException e){
             Log.e("NewsRequestManager", "Problem while parsing News JSON results", e);

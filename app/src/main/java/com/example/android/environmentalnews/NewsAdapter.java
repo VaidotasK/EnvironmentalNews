@@ -1,20 +1,22 @@
 package com.example.android.environmentalnews;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 public class NewsAdapter extends ArrayAdapter<News> {
 
     private static final String DATE_SEPARATOR = "T";
     private static final String DATE_EXTRA_CHAR = "Z";
 
-    public NewsAdapter (Context context, ArrayList<News> news){
+    public NewsAdapter (Context context, List<News> news){
         super(context, 0, news);
     }
 
@@ -38,15 +40,19 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
         TextView articlePublishDate = convertView.findViewById(R.id.published_data_textView);
 
+
         String fullPublishDate = currentNew.getArticlePublishedDate();
 
         StringBuilder dateTimeStringBuilder = new StringBuilder();
 
-        while (fullPublishDate.contains(DATE_EXTRA_CHAR)) {
-            fullPublishDate.replaceFirst("Z", "");
+        String[] dataTimeParts;
+
+        if (fullPublishDate.contains(DATE_EXTRA_CHAR)) {
+            dataTimeParts = fullPublishDate.split(DATE_EXTRA_CHAR);
+            fullPublishDate = dataTimeParts[0];
         }
         if (fullPublishDate.contains(DATE_SEPARATOR)) {
-                String[] dataTimeParts = fullPublishDate.split(DATE_SEPARATOR);
+            dataTimeParts = fullPublishDate.split(DATE_SEPARATOR);
                 dateTimeStringBuilder.append(dataTimeParts [0] + "\n" + dataTimeParts[1]);
             }
         articlePublishDate.setText(dateTimeStringBuilder.toString());

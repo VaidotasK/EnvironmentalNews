@@ -14,6 +14,8 @@ public class News {
     private static final String NO_AUTHOR = "";
 
 
+
+
     //    Full constructor to show all information of the article in list view
     public News (String articleTitle, String articleSectionName, String articlePublishedDate, String articleUrl, String articleAuthor) {
         this.articleTitle = articleTitle;

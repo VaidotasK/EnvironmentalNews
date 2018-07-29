@@ -2,6 +2,7 @@ package com.example.android.environmentalnews;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.util.Log;
 
 
 import java.util.List;

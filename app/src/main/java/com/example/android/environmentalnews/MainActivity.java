@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>>{
 
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private ProgressBar progressBar;
 
-    private static final String URL_TO_JSON_DATA = "http://content.guardianapis.com/search?section=environment&page-size=99&order-by=newest&show-tags=contributor&q=climate%20change&api-key=e770d08a-16eb-438e-b077-93eee8193153";
+    private static final String URL_TO_JSON_DATA = "https://content.guardianapis.com/search?section=environment&page-size=200&order-by=newest&show-tags=contributor&q=climate%20change&api-key=e770d08a-16eb-438e-b077-93eee8193153";
 
 
     @Override
@@ -45,12 +47,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if(null != activeNetwork && activeNetwork.isConnected()){
             getLoaderManager().initLoader(NEWS_LOADER_IN, null, this);
+            Log.e(LOG_TAG, "InitLoader");
         }
         else {
             progressBar = (ProgressBar) findViewById(R.id.progressBar);
             progressBar.setVisibility(View.GONE);
             emptyStateTextView = (TextView) findViewById(R.id.empty_state_textView);
             emptyStateTextView.setText("No Internet connection");
+
         }
 
         ListView newsListView = (ListView) findViewById(R.id.list);
@@ -83,20 +87,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> news) {
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
 
         emptyStateTextView.setText("No article about environment was found");
         adapter.clear();
 
-        if(null != news && !news.isEmpty()){
+        if (null != news && !news.isEmpty()) {
             adapter.addAll(news);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<List<News>> loader) {
-
         adapter.clear();
     }
 }
