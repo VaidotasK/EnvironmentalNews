@@ -15,17 +15,21 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
    private String url;
 
 
-   NewsLoader(Context context, String url){
+  public NewsLoader(Context context, String url){
        super(context);
        this.url = url;
    }
 
-    @Nullable
+    @Override
+    protected void onStartLoading() {
+        forceLoad();
+    }
+
     @Override
     public List<News> loadInBackground() {
         if(null == url){
           return null;
         }
-        return NewsRequestManager.fetchNewsData(url);
+        return  NewsRequestManager.fetchNewsData(url);
     }
 }

@@ -110,19 +110,15 @@ public final class NewsRequestManager {
         return outputOfInpStr.toString();
     }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 
-    private static List<News> extractDataFromJSON(String NewsJson){
-        if(NewsJson.isEmpty()){
+    private static List<News> extractDataFromJSON(String newsJson){
+        if(TextUtils.isEmpty(newsJson)){
             return null;
         }
         List<News> news = new ArrayList<>();
 
         try {
-            JSONObject root = new JSONObject(NewsJson);
+            JSONObject root = new JSONObject(newsJson);
             JSONObject response = root.getJSONObject("response");
             JSONArray results = response.getJSONArray("results");
             for(int i = 0; i < results.length(); i++){
