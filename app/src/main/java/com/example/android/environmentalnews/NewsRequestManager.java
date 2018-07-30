@@ -22,131 +22,186 @@ import static com.example.android.environmentalnews.MainActivity.LOG_TAG;
 
 
 /**
- * Helper methods related to requesting and receiving Environmental news data from theguardian
+ * Helper methods for requesting and receiving Environmental news data from theguardian
  */
 public final class NewsRequestManager {
 
+    private static final String REQUEST_METHOD_GET = "GET";
+    private static final int URL_CONNECTION_READ_TIMEOUT = 10000;
+    private static final int URL_CONNECTION_CONNECT_TIMEOUT = 15000;
+    private static final int RESPONSE_CODE_OK = 200;
+    //Set default variable for author
     private static String articleAuthor = "";
 
 
-
-    private NewsRequestManager(){
+    /**
+     * Create a private constructor. It's purpose is only hold static variables and methods,
+     * which can be accessed directly from the class name {@link NewsRequestManager}
+     * and an object instance of NewsRequestManager is not needed).
+     */
+    private NewsRequestManager() {
     }
 
-    public static List<News> fetchNewsData(String requestUrl){
+    /**
+     * Query the theguardian data set and return a list of {@link News} objects.
+     */
+    public static List<News> fetchNewsData(String requestUrl) {
 
-        URL url = createUrl (requestUrl);
+        URL url = createUrl(requestUrl);
 
+        // Perform HTTP request and receive a JSON response back
         String jsonResponse = null;
-        try{
+        try {
             jsonResponse = makeGetHttpRequest(url);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             Log.e(LOG_TAG, "Problem making the HTTP request", e);
         }
 
+        // Extract relevant information from the JSON response and create a list of {@link News}
         List<News> news = extractDataFromJSON(jsonResponse);
         return news;
     }
 
-    private static URL createUrl(String stringUrl){
+    /**
+     * Return new URL object made from given string url
+     *
+     * @param stringUrl - given string url
+     * @return new URL object
+     */
+    private static URL createUrl(String stringUrl) {
         URL url = null;
-        try{
+        try {
             url = new URL(stringUrl);
             return url;
-        }
-        catch (MalformedURLException e){
+        } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "Problem building URL", e);
             return url;
         }
     }
 
 
-    private static String makeGetHttpRequest(URL url) throws IOException{
+    /**
+     * Make an HTTP request to the given URL and return a String as response.
+     *
+     * @param url given URL
+     * @return json response in String variable.
+     * @throws IOException
+     */
+    private static String makeGetHttpRequest(URL url) throws IOException {
+        // Check if url is null, if yes return early.
         String jsonResponse = "";
-        if(null == url) {
+        if (null == url) {
             return jsonResponse;
         }
         HttpURLConnection httpURLConnection = null;
         InputStream inputStream = null;
 
-        try{
+        try {
             httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("GET");
-            httpURLConnection.setReadTimeout(10000);
-            httpURLConnection.setConnectTimeout(15000);
+            httpURLConnection.setRequestMethod(REQUEST_METHOD_GET);
+            httpURLConnection.setReadTimeout(URL_CONNECTION_READ_TIMEOUT);
+            httpURLConnection.setConnectTimeout(URL_CONNECTION_CONNECT_TIMEOUT);
             httpURLConnection.connect();
 
-            if(200 == httpURLConnection.getResponseCode()){
+            // Check if the request was successful: response code = 200,
+            // if yes, read the input stream and parse the response.
+            if (RESPONSE_CODE_OK == httpURLConnection.getResponseCode()) {
                 inputStream = httpURLConnection.getInputStream();
                 jsonResponse = readFromInputStream(inputStream);
-            }
-            else {
+            } else {
                 Log.e(LOG_TAG, "Error response code" + httpURLConnection.getResponseCode());
             }
-        }
-        catch (IOException e){
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.",  e);
-        }
-        finally {
-            if(null != httpURLConnection){
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+        } finally {
+            if (null != httpURLConnection) {
                 httpURLConnection.disconnect();
             }
-            if(null != inputStream){
+            if (null != inputStream) {
                 inputStream.close();
             }
         }
         return jsonResponse;
     }
 
-    private static String readFromInputStream (InputStream inputStream) throws IOException{
+    /**
+     * Convert {@link InputStream} into String which contains whole JSON response.
+     */
+    private static String readFromInputStream(InputStream inputStream) throws IOException {
         StringBuilder outputOfInpStr = new StringBuilder();
-        if(null != inputStream){
+        if (null != inputStream) {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String line = bufferedReader.readLine();
-            while (null != line){
+            while (null != line) {
                 outputOfInpStr.append(line);
                 line = bufferedReader.readLine();
             }
         }
 
+        //Return String containing JSON response
         return outputOfInpStr.toString();
     }
 
 
-    private static List<News> extractDataFromJSON(String newsJson){
-        if(TextUtils.isEmpty(newsJson)){
+    /**
+     * Return a list of {@link News} objects that have data whose were get from
+     * parsing the given JSON response.
+     */
+    private static List<News> extractDataFromJSON(String newsJson) {
+        //Check if String which should contain jsonRequest isn't empty, if yes return early
+        if (TextUtils.isEmpty(newsJson)) {
             return null;
         }
+
+        // Create an empty ArrayList to which we can add News objects
         List<News> news = new ArrayList<>();
 
+        // Try to parse String with JSONresponse. If there's a problem with how JSON
+        // is formatted, a JSONException exception object will be thrown.
         try {
+            // Create a JSONObject from the JSON response string
             JSONObject root = new JSONObject(newsJson);
 
+            // Create a JSONObject containing all information
             JSONObject response = root.getJSONObject("response");
+
+            // Extract the JSONArray, using key called "results",
+            // which shows a list of information on article.
             JSONArray results = response.getJSONArray("results");
-            for(int i = 0; i < results.length(); i++){
+
+            // For each article(new) in the resultsArray, create an {@link News} object
+            for (int i = 0; i < results.length(); i++) {
                 JSONObject article = results.getJSONObject(i);
 
+                //Parse information from JSON object article: article name, section name,
+                // publish date, url address and save in new String variables
                 String articleTitle = article.getString("webTitle");
                 String articleSectionName = article.getString("sectionName");
                 String articlePublishedDate = article.getString("webPublicationDate");
                 String articleUrl = article.getString("webUrl");
 
+                //From JSONobject article create tagsArray, which represents list of tags,
+                // for this case article author
                 JSONArray tags = article.getJSONArray("tags");
-                for(int y = 0; y < tags.length(); y++){
+                for (int y = 0; y < tags.length(); y++) {
                     JSONObject tagsObj = tags.getJSONObject(y);
-                   articleAuthor = tagsObj.getString("webTitle");}
 
+                    //Check if author is mentioned, if yes parse author and store in new String
+                    if (tagsObj.getString("webTitle") != null) {
+                        articleAuthor = tagsObj.getString("webTitle");
+                    }
+                }
+                //Create new News object with parsed data
                 News environmentalNew = new News(articleTitle, articleSectionName, articlePublishedDate, articleUrl, articleAuthor);
 
+                //Build up list with News objects
                 news.add(environmentalNew);
             }
-        }
-        catch (JSONException e){
+        } catch (JSONException e) {
             Log.e("NewsRequestManager", "Problem while parsing News JSON results", e);
         }
+        // Return the list of news
         return news;
     }
 }

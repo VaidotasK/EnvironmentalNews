@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Environmental News</string>
+    <string name="msg_sorry_not_providing_articles">Sorry, can\'t find any article at the moment</string>
+    <string name="msg_no_internet">No Internet connection</string>
+    <string name="msg_no_articles_found">No article about environment was found</string>
+    <string name="by">By" "</string>
 </resources>

@@ -2,22 +2,19 @@ package com.example.android.environmentalnews;
 
 public class News {
 
+
+    //Constant variable if no author is provided
+    private static final String NO_AUTHOR = "";
+    //Private variables used in constructor
     private String articleTitle;
     private String articleSectionName;
     private String articlePublishedDate;
     private String articleUrl;
-
-
     private String articleAuthor;
-
-    //Constant variable if no author is provided
-    private static final String NO_AUTHOR = "";
-
-
 
 
     //    Full constructor to show all information of the article in list view
-    public News (String articleTitle, String articleSectionName, String articlePublishedDate, String articleUrl, String articleAuthor) {
+    public News(String articleTitle, String articleSectionName, String articlePublishedDate, String articleUrl, String articleAuthor) {
         this.articleTitle = articleTitle;
         this.articleSectionName = articleSectionName;
         this.articlePublishedDate = articlePublishedDate;
@@ -25,14 +22,6 @@ public class News {
         this.articleAuthor = articleAuthor;
     }
 
-    //Constructor which doesn't involve article contributor
-    public News (String articleTitle, String articleSectionName, String articlePublishedDate, String articleUrl) {
-        this.articleTitle = articleTitle;
-        this.articleSectionName = articleSectionName;
-        this.articlePublishedDate = articlePublishedDate;
-        this.articleUrl = articleUrl;
-        this.articleAuthor = NO_AUTHOR;
-    }
 
     public String getArticleTitle() {
         return articleTitle;
@@ -54,7 +43,10 @@ public class News {
         return articleAuthor;
     }
 
-    public boolean hasAuthor(){
+    /**
+     * Method to check if author is provided
+     */
+    public boolean hasAuthor() {
         return articleAuthor != NO_AUTHOR;
 
     }
