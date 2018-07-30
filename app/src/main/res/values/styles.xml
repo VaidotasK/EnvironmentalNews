@@ -1,11 +1,44 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/section_name_background</item>
     </style>
+
+    <style name="ViewMainBasic">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="ViewMainBasicCenterInParent" parent="ViewMainBasic">
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <style name="TextListItemBasic">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/textSize_M</item>
+    </style>
+
+    <style name="TextListItemSectionName"   parent="TextListItemBasic">
+        <item name="android:textColor">@color/section_name_background</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TextListItemTitle" parent="TextListItemBasic">
+        <item name="android:layout_width">@dimen/padOrMar_XXS</item>
+        <item name="android:textSize">@dimen/textSize_L</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="TextListItemAuthor"    parent="TextListItemTitle">
+        <item name="android:textSize">@dimen/textSize_S</item>
+        <item name="android:textStyle">italic|bold</item>
+    </style>
+
 
 </resources>
