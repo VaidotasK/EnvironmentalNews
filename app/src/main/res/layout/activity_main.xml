@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:padding="8dp">
+    android:background="@color/main_background"
+    tools:context=".MainActivity">
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:dividerHeight="0dp"/>
+        style="@style/ViewMainBasic"
+        android:dividerHeight="@dimen/padOrMar_XS"
+        android:paddingLeft="@dimen/padOrMar_M"
+        android:paddingRight="@dimen/padOrMar_M" />
+
     <TextView
         android:id="@+id/empty_state_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sorry, can't find any article at the moment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_centerInParent="true"/>
+        style="@style/ViewMainBasicCenterInParent"
+        android:text="@string/msg_sorry_not_providing_articles" />
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        style="@style/ViewMainBasicCenterInParent" />
 
 </RelativeLayout>
