@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="106dp"
-    android:background="#484848"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/padOrMar_XL"
+    android:background="@color/main_background"
     android:orientation="vertical"
-    android:padding="14dp">
+    android:paddingBottom="@dimen/padOrMar_M"
+    android:paddingTop="@dimen/padOrMar_M">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,21 +15,14 @@
 
         <TextView
             android:id="@+id/article_title_textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/TextListItemTitle"
             android:maxLines="2"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
             tools:text="Article title, with all needed words and information" />
 
         <TextView
             android:id="@+id/published_data_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextListItemBasic"
             android:gravity="end"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
             tools:text="2002-16-15 \n 16:02" />
     </LinearLayout>
 
@@ -38,22 +32,13 @@
 
         <TextView
             android:id="@+id/author_textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingTop="8dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:textStyle="italic|bold"
+            style="@style/TextListItemAuthor"
+            android:paddingTop="@dimen/padOrMar_S"
             tools:text="By Author author" />
 
         <TextView
             android:id="@+id/section_name_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="true"
-            android:textColor="#76ff03"
-            android:textSize="16sp"
+            style="@style/TextListItemSectionName"
             tools:text="Environment" />
 
 
