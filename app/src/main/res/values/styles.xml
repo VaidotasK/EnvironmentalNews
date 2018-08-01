@@ -24,7 +24,7 @@
         <item name="android:textSize">@dimen/textSize_M</item>
     </style>
 
-    <style name="TextListItemSectionName"   parent="TextListItemBasic">
+    <style name="TextListItemSectionName" parent="TextListItemBasic">
         <item name="android:textColor">@color/section_name_background</item>
         <item name="android:textAllCaps">true</item>
     </style>
@@ -35,7 +35,7 @@
         <item name="android:layout_weight">1</item>
     </style>
 
-    <style name="TextListItemAuthor"    parent="TextListItemTitle">
+    <style name="TextListItemAuthor" parent="TextListItemTitle">
         <item name="android:textSize">@dimen/textSize_S</item>
         <item name="android:textStyle">italic|bold</item>
     </style>
