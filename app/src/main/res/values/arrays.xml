@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="settings_order_by_labels">
+        <item>@string/settings_order_by_newest_label</item>
+        <item>@string/settings_order_by_oldest_label</item>
+    </string-array>
+
+    <string-array name="settings_order_by_values">
+        <item>@string/settings_order_by_newest_value</item>
+        <item>@string/settings_order_by_oldest_value</item>
+    </string-array>
+
+    <!--Array list for section preference list-->
+    <!--Section list for user eye-->
+    <string-array name="settings_section_labels">
+        <item>@string/settings_section_world_label</item>
+        <item>@string/settings_section_observer_label</item>
+        <item>@string/settings_section_environment_label</item>
+        <item>@string/settings_section_science_label</item>
+        <item>@string/settings_section_technology_label</item>
+        <item>@string/settings_section_business_label</item>
+        <item>@string/settings_section_global_development_label</item>
+        <item>@string/settings_section_society_label</item>
+        <item>@string/settings_section_education_label</item>
+        <item>@string/settings_section_culture_label</item>
+        <item>@string/settings_section_politics_label</item>
+        <item>@string/settings_section_travel_label</item>
+        <item>@string/settings_section_food_label</item>
+    </string-array>
+
+    <!--Section values-->
+    <string-array name="settings_section_values">
+        <item>@string/settings_section_world_value</item>
+        <item>@string/settings_section_observer_value</item>
+        <item>@string/settings_section_environment_value</item>
+        <item>@string/settings_section_science_value</item>
+        <item>@string/settings_section_technology_value</item>
+        <item>@string/settings_section_business_value</item>
+        <item>@string/settings_section_global_development_value</item>
+        <item>@string/settings_section_society_value</item>
+        <item>@string/settings_section_education_value</item>
+        <item>@string/settings_section_culture_value</item>
+        <item>@string/settings_section_politics_value</item>
+        <item>@string/settings_section_travel_value</item>
+        <item>@string/settings_section_food_value</item>
+    </string-array>
+
+</resources>
