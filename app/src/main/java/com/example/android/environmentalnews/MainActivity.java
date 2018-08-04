@@ -5,11 +5,15 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -32,7 +36,40 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /**
      * URL for article(new) data from the theguardian data set
      */
-    private static final String URL_TO_JSON_DATA = "https://content.guardianapis.com/search?section=environment&page-size=200&order-by=newest&show-tags=contributor&q=climate%20change&api-key=e770d08a-16eb-438e-b077-93eee8193153";
+    private static final String URL_TO_JSON_DATA = "https://content.guardianapis.com/search";
+
+    /**
+     * Personal key to get access to the Guardian articles
+     */
+    private static final String URL_API_KEY = "e770d08a-16eb-438e-b077-93eee8193153";
+
+    /**
+     * Constant value to get tag info from article
+     */
+    private static final String TAG_KEY = "show-tags";
+
+    /**
+     * Constant value for tag key. Needed to show article author
+     */
+    private static final String TAG_VALUE_DEFAULT = "contributor";
+
+    /**
+     * Constant value of api-key name
+     */
+    private static final String API_KEY_KEY = "api-key";
+
+    /**
+     * Constant of query parameter page size name
+     */
+    private static final String PAGE_SIZE_KEY = "page-size";
+
+    /**
+     * Max page size value
+     */
+    private static final String PAGE_SIZE_MAX_VALUE = "200";
+
+
+
     /**
      * Adapter for the list of news
      */
@@ -95,7 +132,44 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     // Create a new loader for the given URL
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
-        return new NewsLoader(this, URL_TO_JSON_DATA);
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // getString retrieves a String value from the preferences. The second parameter is the
+        // default value for this preference.
+
+        String searchPhrase = sharedPrefs.getString(
+                getString(R.string.settings_search_key),
+                getString(R.string.settings_search_default));
+
+        String sectionName = sharedPrefs.getString(
+                getString(R.string.settings_section_key),
+                getString(R.string.settings_section_default));
+
+        String orderBy = sharedPrefs.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default));
+
+        // parse breaks apart the URI string that's passed into its parameter
+        Uri baseUri = Uri.parse(URL_TO_JSON_DATA);
+
+        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        // Append query parameter and its value. For example, the `q=climate change`
+
+        /**
+         * Add these query parameters: search phrase, order articles by(newest/oldest), name of section,
+         * and three constants: tags (contributor), api-key(personal key), page size with max value(200)
+         */
+        uriBuilder.appendQueryParameter(getString(R.string.settings_search_key), searchPhrase);
+        uriBuilder.appendQueryParameter(getString(R.string.settings_order_by_key), orderBy);
+        uriBuilder.appendQueryParameter(getString(R.string.settings_section_key), sectionName);
+        uriBuilder.appendQueryParameter(PAGE_SIZE_KEY, PAGE_SIZE_MAX_VALUE);
+        uriBuilder.appendQueryParameter(TAG_KEY, TAG_VALUE_DEFAULT);
+        uriBuilder.appendQueryParameter(API_KEY_KEY, URL_API_KEY);
+
+        return new NewsLoader(this, uriBuilder.toString());
     }
 
 
@@ -125,5 +199,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Loader reset, we can clear out our existing data.
         adapter.clear();
+    }
+
+    @Override
+    // Initialize Activity's options menu
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    // Opens option menu if selected.
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
